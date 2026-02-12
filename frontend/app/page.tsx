@@ -295,7 +295,7 @@ export default function TeaserPage() {
                 className="space-y-4"
               >
                 <p className="text-green-300/70 text-lg">
-                  [Coming Soon...]
+                  
                 </p>
                 <div className="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-green-400 to-transparent" />
  
@@ -325,7 +325,7 @@ export default function TeaserPage() {
                 className="inline-block"
               >
                 <button className="px-12 py-4 bg-black border-2 border-green-400 text-green-400 text-xl tracking-widest hover:bg-green-400/10 transition-colors duration-300">
-                  <span className="animate-pulse">ENTER</span>
+                  <span className="animate-pulse">Coming Soon...</span>
                 </button>
               </motion.div>
               
