@@ -8,6 +8,7 @@ import "@fontsource/share-tech-mono";
 import PortalHallway from "@/components/ui/PortalHallway";
 import AboutSection from "@/components/ui/AboutSection";
 import PlaceholderSection from "@/components/ui/PlaceholderSection";
+import ConstructSection from "@/components/ui/ConstructSection";
 import QuoteTransition from "@/components/ui/QuoteTransition";
 import TimelineSection from "@/components/ui/TimelineSection";
 import { PORTALS } from "@/lib/portals";
@@ -320,7 +321,7 @@ export default function TeaserPage() {
                       letterSpacing: "clamp(4px, 2vw, 15px)",
                     }}
                   >
-                    <span className="text-green-400">TINKERTHON</span>
+                    <span className="text-green-400">NEXUS</span>
                     <span className="text-white">&apos;26</span>
                   </motion.h1>
 
@@ -446,7 +447,11 @@ export default function TeaserPage() {
           <TimelineSection key="timeline" onReturn={handleReturn} />
         )}
 
-        {["domains", "sponsors", "registration"].includes(activeView) && (
+        {activeView === "domains" && (
+          <ConstructSection key="domains" onReturn={handleReturn} />
+        )}
+
+        {["sponsors", "registration"].includes(activeView) && (
           <PlaceholderSection
             key={activeView}
             title={SECTION_META[activeView]?.title || activeView.toUpperCase()}
