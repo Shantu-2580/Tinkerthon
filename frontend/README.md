@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TINKERTHON '26 — The Matrix Has You
 
-## Getting Started
+Welcome to the official digital entry for **TINKERTHON '26**. This project is a futuristic, Matrix-inspired web application designed to take participants on a digital journey through the event's different sectors.
 
-First, run the development server:
+![Matrix Theme](https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🕶️ The Experience
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Tinkerthon '26 is not just a hackathon; it's a descent into the system. The landing page features a terminal-style interface with:
+- **Matrix Rain**: A high-performance canvas-based binary rain effect.
+- **Portal Navigation**: Interactive "doors" that transition users into different event dimensions.
+- **CRT Aesthetics**: Scanlines, flicker effects, and glitch typography for that authentic cyberpunk feel.
+- **Morpheus Silhouette**: A 3D-inspired silhouette transition (planned/integrated).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v18.x or later recommended)
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
-## Learn More
+### Installation
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd tinkerthon/frontend
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Create local environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
 
-## Deploy on Vercel
+   On Windows PowerShell:
+   ```powershell
+   Copy-Item .env.example .env.local
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the system initializing.
+
+## 🛠️ Technology Stack
+
+- **Framework**: [Next.js 15 (App Router)](https://nextjs.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **3D Graphics**: [Three.js](https://threejs.org/) via [React Three Fiber](https://docs.pmnd.rs/react-three-fiber)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Fonts**: Orbitron, Share Tech Mono (loaded via @fontsource)
+
+## 📂 Project Structure
+
+- `app/`: Next.js pages and global styles.
+- `components/ui/`: Core UI components including the `PortalHallway`, `TimelineSection`, and `AboutSection`.
+- `lib/`: Utility functions and static data (e.g., `portals` metadata).
+- `public/`: Assets including custom glitch fonts (`Hacked.ttf`).
+
+## 📜 Event Timeline
+
+The "The Descent" section outlines the roadmap for Tinkerthon '26:
+- **Registration**: Starts 16/03/2026
+- **PS Release**: 20/03/2026
+- **Final Presentation**: 23/03/2026
+
+---
+
+*Made with 💚 for the rebels and the dreamers.*
+> "Every exit is an entry somewhere else."

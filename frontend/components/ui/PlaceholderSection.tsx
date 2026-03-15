@@ -15,7 +15,6 @@ export default function PlaceholderSection({ title, subtitle, onReturn }: Placeh
   const [visibleFeedChars, setVisibleFeedChars] = useState(0)
 
   useEffect(() => {
-    setVisibleFeedChars(0)
     let intervalId: ReturnType<typeof setInterval> | null = null
     const timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {

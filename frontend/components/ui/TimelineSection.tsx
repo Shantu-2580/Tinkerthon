@@ -37,8 +37,6 @@ function TypewriterPayload({
   const [visibleChars, setVisibleChars] = useState(0)
 
   useEffect(() => {
-    setVisibleChars(0)
-
     let intervalId: ReturnType<typeof setInterval> | null = null
     const timeoutId = setTimeout(() => {
       intervalId = setInterval(() => {
@@ -152,7 +150,7 @@ export default function TimelineSection({ onReturn }: TimelineSectionProps) {
                     SYS.DATE / {event.date}
                   </span>
                   <span className="hidden sm:inline-block text-[10px] font-mono text-green-500/40 tracking-[0.2em] group-hover:animate-pulse">
-                    [0x{Math.random().toString(16).substring(2, 8).toUpperCase()}]
+                    [0x{event.date.replace(/\D/g, "").slice(-6).padStart(6, "0").toUpperCase()}]
                   </span>
                 </div>
 

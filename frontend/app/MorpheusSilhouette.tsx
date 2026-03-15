@@ -15,20 +15,21 @@ export default function MorpheusSilhouette({ themeColor }: MorpheusSilhouettePro
   const silhouetteRef = useRef<THREE.Group | null>(null);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    const container = containerRef.current;
+    if (!container) return;
 
     // Initialize Three.js
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const camera = new THREE.PerspectiveCamera(45, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.z = 5;
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+    renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setClearColor(0x000000, 0);
-    containerRef.current.appendChild(renderer.domElement);
+    container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
     // Create a simple silhouette geometry (simplified human form)
@@ -145,11 +146,11 @@ export default function MorpheusSilhouette({ themeColor }: MorpheusSilhouettePro
 
     // Handle resize
     const handleResize = () => {
-      if (!containerRef.current || !cameraRef.current || !rendererRef.current) return;
+      if (!cameraRef.current || !rendererRef.current) return;
       
-      cameraRef.current.aspect = containerRef.current.clientWidth / containerRef.current.clientHeight;
+      cameraRef.current.aspect = container.clientWidth / container.clientHeight;
       cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+      rendererRef.current.setSize(container.clientWidth, container.clientHeight);
     };
 
     window.addEventListener('resize', handleResize);
@@ -159,8 +160,8 @@ export default function MorpheusSilhouette({ themeColor }: MorpheusSilhouettePro
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationId);
       
-      if (rendererRef.current && containerRef.current) {
-        containerRef.current.removeChild(rendererRef.current.domElement);
+      if (rendererRef.current && container.contains(rendererRef.current.domElement)) {
+        container.removeChild(rendererRef.current.domElement);
         rendererRef.current.dispose();
       }
     };

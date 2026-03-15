@@ -100,6 +100,7 @@ export default function TeaserPage() {
   const [activeView, setActiveView] = useState<ViewType>("hero");
   const [currentQuote, setCurrentQuote] = useState("");
   const [pendingView, setPendingView] = useState<ViewType>("portals");
+  const flickerRepeatDelay = 10;
 
   const handlePortalSelect = (sectionId: string) => {
     // Direct navigation to portals (from "ENTER THE SYSTEM") — no quote needed
@@ -128,7 +129,6 @@ export default function TeaserPage() {
 
     const timer = setTimeout(() => {
       if (pendingView === "hero") {
-        sequenceStarted.current = false;
         setPhase(0);
         setShowText(false);
         setShowGlitch(false);
@@ -166,12 +166,8 @@ export default function TeaserPage() {
     };
   }, []);
 
-  const sequenceStarted = useRef(false);
-
   useEffect(() => {
     if (activeView !== "hero" || phase !== 0) return;
-    if (sequenceStarted.current) return;
-    sequenceStarted.current = true;
 
     const sequence = async () => {
       await new Promise(r => setTimeout(r, 1000));
@@ -214,7 +210,7 @@ export default function TeaserPage() {
           animate={{ opacity: [0, 0.02, 0] }}
           transition={{
             repeat: Infinity,
-            repeatDelay: Math.random() * 15 + 5,
+            repeatDelay: flickerRepeatDelay,
             duration: 0.08,
           }}
         />
@@ -325,7 +321,7 @@ export default function TeaserPage() {
                     }}
                   >
                     <span className="text-green-400">TINKERTHON</span>
-                    <span className="text-white">'26</span>
+                    <span className="text-white">&apos;26</span>
                   </motion.h1>
 
                   {showGlitch && (
