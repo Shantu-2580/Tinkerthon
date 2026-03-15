@@ -86,7 +86,7 @@ const SECTION_META: Record<string, { title: string; subtitle: string }> = {
   domains: { title: "THE CONSTRUCT", subtitle: "EXPLORE DOMAINS" },
   timeline: { title: "THE DESCENT", subtitle: "EVENT TIMELINE" },
   sponsors: { title: "THE ALLIES", subtitle: "OUR SPONSORS" },
-  registration: { title: "THE EXIT", subtitle: "REGISTER NOW" },
+  registration: { title: "REGISTRATION GROUND", subtitle: "USER REGISTRATION" },
 };
 
 const RETURN_QUOTE = "Every exit is an entry somewhere else.";

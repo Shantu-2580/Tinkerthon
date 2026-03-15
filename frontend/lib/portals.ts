@@ -9,8 +9,8 @@ export interface Portal {
 export const PORTALS: Portal[] = [
   {
     title: "Entry Portal",
-    sectionId: "hero",
-    subtitle: "RETURN TO ORIGIN",
+    sectionId: "registration",
+    subtitle: "USER REGISTRATION",
     quote: "Wake up, Neo. The Matrix has you.",
     image: "/assets/portals/Entry_Portal.png",
   },
@@ -44,8 +44,8 @@ export const PORTALS: Portal[] = [
   },
   {
     title: "The Exit",
-    sectionId: "registration",
-    subtitle: "REGISTER NOW",
+    sectionId: "hero",
+    subtitle: "RETURN TO ORIGIN",
     quote: "There is a difference between knowing the path and walking the path.",
     image: "/assets/portals/The_Exit.png",
   },
