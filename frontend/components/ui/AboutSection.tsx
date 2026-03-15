@@ -5,11 +5,11 @@ import { motion } from "framer-motion"
 import ReturnPortalButton from "./ReturnPortalButton"
 
 const TERMINAL_LINES = [
-  "SYSTEM LOG: TINKERTHON INITIATIVE",
+  "SYSTEM LOG: NEXUS INITIATIVE",
   "",
   "The Architect has prepared a challenge.",
   "",
-  "Tinkerthon is the innovation playground,",
+  "NEXUS is the innovation playground,",
   "where students experiment, prototype, and build",
   "solutions across emerging technologies.",
   "",
@@ -157,7 +157,7 @@ export default function AboutSection({ onReturn }: AboutSectionProps) {
               className="mb-4 text-xs"
               style={{ color: "rgba(159,230,184,0.45)" }}
             >
-              $ cat /var/log/tinkerthon.log
+              $ cat /var/log/Nexus.log
             </div>
 
             {TERMINAL_LINES.map((line, i) => (

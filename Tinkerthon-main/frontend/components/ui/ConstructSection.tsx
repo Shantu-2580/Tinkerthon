@@ -1,17 +1,9 @@
 "use client"
 
 import { useEffect, useRef, useState, useCallback } from "react"
-import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
 import { motion, AnimatePresence } from "framer-motion"
 import ReturnPortalButton from "./ReturnPortalButton"
-
-const DOMAIN_SLUGS: Record<string, string> = {
-  "WEB_DEVELOPMENT": "web-development",
-  "DATA_SCIENCE": "data-science",
-  "BLOCKCHAIN": "blockchain",
-  "AI_/_ML": "ai-ml",
-}
 
 const MatrixParasite = dynamic(() => import("./MatrixParasite"), { ssr: false })
 
@@ -195,12 +187,9 @@ function Pill({ color, glowColor }: { color: string; glowColor: string }) {
 }
 
 /* ─── terminal card ─── */
-function TerminalCard({ label, borderColor, accentColor, onClick }: { label: string; borderColor: string; accentColor: string; onClick?: () => void }) {
+function TerminalCard({ label, borderColor, accentColor }: { label: string; borderColor: string; accentColor: string }) {
   return (
     <motion.div
-      onClick={onClick}
-      whileHover={onClick ? { scale: 1.05, boxShadow: `0 0 20px ${accentColor}60` } : {}}
-      whileTap={onClick ? { scale: 0.95 } : {}}
       className="px-5 py-3 font-mono text-sm tracking-widest text-center select-none"
       style={{
         border: `1px solid ${borderColor}`,
@@ -209,7 +198,6 @@ function TerminalCard({ label, borderColor, accentColor, onClick }: { label: str
         fontFamily: "'Share Tech Mono', 'Orbitron', monospace",
         boxShadow: `inset 0 0 18px ${accentColor}40`,
         backdropFilter: "blur(4px)",
-        cursor: onClick ? "pointer" : "default",
       }}
     >
       [ {label} ]
@@ -219,10 +207,10 @@ function TerminalCard({ label, borderColor, accentColor, onClick }: { label: str
 
 /* ─── pill column ─── */
 function PillColumn({
-  pillColor, pillGlow, tintColor, trackLabel, cards, accentColor, unlocked, theme, onCardClick,
+  pillColor, pillGlow, tintColor, trackLabel, cards, accentColor, unlocked, theme,
 }: {
   pillColor: string; pillGlow: string; tintColor: string; trackLabel: string
-  cards: string[]; accentColor: string; unlocked: boolean; theme: typeof THEME.alive; onCardClick?: (card: string) => void
+  cards: string[]; accentColor: string; unlocked: boolean; theme: typeof THEME.alive
 }) {
   const [hovered, setHovered] = useState(false)
 
@@ -234,10 +222,10 @@ function PillColumn({
 
   return (
     <div
-      className="relative flex flex-col items-center py-6"
+      className="relative flex flex-col items-center py-3 md:py-6 my-2 md:my-0"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ minWidth: 220, cursor: unlocked ? "pointer" : "default" }}
+      style={{ minWidth: "220px", cursor: unlocked ? "pointer" : "default" }}
     >
       <motion.div
         className="absolute inset-0 rounded-lg pointer-events-none z-[1]"
@@ -269,7 +257,7 @@ function PillColumn({
             <motion.div className="flex flex-col gap-3 mt-1" variants={cardContainerVariants} initial="hidden" animate="visible" exit="hidden">
               {cards.map((c) => (
                 <motion.div key={c} variants={cardVariants}>
-                  <TerminalCard label={c} borderColor={theme.label} accentColor={accentColor} onClick={onCardClick ? () => onCardClick(c) : undefined} />
+                  <TerminalCard label={c} borderColor={theme.label} accentColor={accentColor} />
                 </motion.div>
               ))}
             </motion.div>
@@ -282,7 +270,6 @@ function PillColumn({
 
 /* ═══════════════════════ MAIN COMPONENT ═══════════════════════ */
 export default function ConstructSection({ onReturn }: ConstructSectionProps) {
-  const router = useRouter()
   const [hitCount, setHitCount] = useState(0)
   const [parasiteDead, setParasiteDead] = useState(false)
   const [flashHit, setFlashHit] = useState(false)
@@ -313,18 +300,13 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
     }
   }, [parasiteDead])
 
-  const handleCardClick = useCallback((card: string) => {
-    const slug = DOMAIN_SLUGS[card]
-    if (slug) router.push(`/domains/${slug}`)
-  }, [router])
-
   return (
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.6 }}
-      className="relative min-h-screen flex flex-col overflow-hidden"
+      className="relative min-h-screen flex flex-col overflow-y-auto overflow-x-hidden pb-12 md:pb-0"
       style={{ background: "#000" }}
     >
       {/* binary rain — color switches with theme */}
@@ -374,7 +356,7 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
       />
 
       {/* ─── heading ─── */}
-      <div className="relative z-20 text-center pt-10 pb-2">
+      <div className="relative z-20 text-center pt-8 sm:pt-10 pb-2 flex-shrink-0">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0, color: theme.heading }}
@@ -405,14 +387,14 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
         </motion.div>
       </div>
 
-      {/* ─── HUD: pinned bottom-center ─── */}
+      {/* ─── HUD: pinned bottom-center on mobile, right on desktop ─── */}
       {!parasiteDead && (
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 pointer-events-none">
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 z-40 pointer-events-none w-full max-w-[90%] md:w-auto flex justify-center md:block">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 0.8 }}
-            className="inline-block px-6 py-3 rounded whitespace-nowrap"
+            className="inline-block px-4 sm:px-6 py-2 sm:py-3 rounded whitespace-nowrap"
             style={{ background: theme.hud.bg, border: `1px solid ${theme.hud.border}` }}
           >
             <p className="text-xs tracking-[0.3em] mb-2"
@@ -450,12 +432,12 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
       {/* ─── Sentinel eliminated ─── */}
       <AnimatePresence>
         {parasiteDead && (
-          <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 text-center">
+          <div className="fixed bottom-20 left-1/2 -translate-x-1/2 md:bottom-auto md:left-auto md:right-6 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 z-40 text-center w-full md:w-auto px-4">
             <motion.p
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="text-xs tracking-[0.3em]"
+              className="text-[10px] sm:text-xs tracking-[0.2em] sm:tracking-[0.3em]"
               style={{ color: "#00ff41", fontFamily: "'Share Tech Mono', monospace", textShadow: "0 0 10px #00ff41" }}>
               {">"} SENTINEL ELIMINATED — CHOOSE YOUR PATH
             </motion.p>
@@ -464,28 +446,27 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
       </AnimatePresence>
 
       {/* ─── unified content ─── */}
-      <div className="relative z-20 flex-1 flex flex-col items-center justify-center">
+      <div className="relative z-20 flex-1 flex flex-col items-center justify-center py-4 md:py-0 pb-32 md:pb-0">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, color: theme.label }}
           transition={{ delay: 0.5, duration: 0.8, color: { duration: 1.5 } }}
-          className="text-[10px] sm:text-xs tracking-[0.35em] mb-8"
+          className="text-[10px] sm:text-xs tracking-[0.35em] mb-4 sm:mb-8"
           style={{ fontFamily: "'Orbitron', monospace", textShadow: `0 0 10px ${theme.primary}, 0 0 20px ${theme.primary}88` }}
         >
           CHOOSE YOUR REALITY
         </motion.p>
 
-        <div className="flex flex-col md:flex-row items-center justify-center gap-0">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 mt-4 sm:mt-8 md:mt-0">
           {/* blue pill */}
           <PillColumn
             pillColor="#0060cc" pillGlow="#0080ff" tintColor="rgba(0, 128, 255, 0.08)"
             trackLabel="JUNIOR_TRACK" cards={["WEB_DEVELOPMENT", "DATA_SCIENCE"]}
             accentColor="#0080ff" unlocked={parasiteDead} theme={theme}
-            onCardClick={parasiteDead ? handleCardClick : undefined}
           />
 
           {/* center divider */}
-          <div className="relative flex items-center justify-center mx-6 md:mx-10">
+          <div className="relative flex items-center justify-center my-4 md:my-0 md:mx-10">
             <motion.div
               className="md:w-[2px] md:h-[280px] w-[200px] h-[2px]"
               animate={{ background: theme.divider, boxShadow: theme.divShadow }}
@@ -501,7 +482,6 @@ export default function ConstructSection({ onReturn }: ConstructSectionProps) {
             pillColor="#cc2020" pillGlow="#ff2020" tintColor="rgba(255, 32, 32, 0.08)"
             trackLabel="SENIOR_TRACK" cards={["BLOCKCHAIN", "AI_/_ML"]}
             accentColor="#ff2020" unlocked={parasiteDead} theme={theme}
-            onCardClick={parasiteDead ? handleCardClick : undefined}
           />
         </div>
       </div>

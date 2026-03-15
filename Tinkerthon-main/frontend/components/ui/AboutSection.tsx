@@ -9,7 +9,7 @@ const TERMINAL_LINES = [
   "",
   "The Architect has prepared a challenge.",
   "",
-  "Nexus is the innovation playground,",
+  "NEXUS is the innovation playground,",
   "where students experiment, prototype, and build",
   "solutions across emerging technologies.",
   "",
@@ -157,7 +157,7 @@ export default function AboutSection({ onReturn }: AboutSectionProps) {
               className="mb-4 text-xs"
               style={{ color: "rgba(159,230,184,0.45)" }}
             >
-              $ cat /var/log/nexus.log
+              $ cat /var/log/Nexus.log
             </div>
 
             {TERMINAL_LINES.map((line, i) => (

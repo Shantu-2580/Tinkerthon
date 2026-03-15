@@ -273,7 +273,7 @@ function ParasiteController({
 
   // Mouse tracking
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
+    const handler = (e: PointerEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
       const y = -(e.clientY / window.innerHeight) * 2 + 1
       mouseWorld.current.set(
@@ -282,8 +282,8 @@ function ParasiteController({
         0
       )
     }
-    window.addEventListener("mousemove", handler)
-    return () => window.removeEventListener("mousemove", handler)
+    window.addEventListener("pointermove", handler as EventListener)
+    return () => window.removeEventListener("pointermove", handler as EventListener)
   }, [viewport])
 
   // React to hits
@@ -482,21 +482,10 @@ export default function MatrixParasite({
   onDead: () => void
   onScreenClick: (mouseX: number, mouseY: number) => void
 }) {
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768)
-    check()
-    window.addEventListener("resize", check)
-    return () => window.removeEventListener("resize", check)
-  }, [])
-
-  if (isMobile) return null
-
   return (
     <div
       className="fixed inset-0"
-      style={{ zIndex: 35, cursor: "crosshair" }}
+      style={{ zIndex: 35, cursor: "crosshair", touchAction: "none" }}
       onClick={(e) => onScreenClick(e.clientX, e.clientY)}
     >
       <Canvas

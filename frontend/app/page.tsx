@@ -28,7 +28,7 @@ function MatrixRain() {
 
     const chars = "01";
     const fontSize = 14;
-    const columns = canvas.width / fontSize;
+    let columns = Math.ceil(canvas.width / fontSize);
     const drops: number[] = [];
 
     for (let i = 0; i < columns; i++) {
@@ -62,6 +62,13 @@ function MatrixRain() {
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      
+      const newColumns = Math.ceil(canvas.width / fontSize);
+      if (newColumns > drops.length) {
+        for (let i = drops.length; i < newColumns; i++) {
+          drops[i] = Math.random() * -100;
+        }
+      }
     };
     window.addEventListener("resize", handleResize);
 
@@ -96,7 +103,6 @@ const QUOTE_DURATION = 2500;
 export default function TeaserPage() {
   const [showText, setShowText] = useState(false);
   const [showGlitch, setShowGlitch] = useState(false);
-  const [countdown, setCountdown] = useState(3);
   const [phase, setPhase] = useState(0);
   const [activeView, setActiveView] = useState<ViewType>("hero");
   const [currentQuote, setCurrentQuote] = useState("");
@@ -133,7 +139,6 @@ export default function TeaserPage() {
         setPhase(0);
         setShowText(false);
         setShowGlitch(false);
-        setCountdown(3);
       }
       setActiveView(pendingView);
     }, QUOTE_DURATION);
@@ -171,22 +176,15 @@ export default function TeaserPage() {
     if (activeView !== "hero" || phase !== 0) return;
 
     const sequence = async () => {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 800));
       setShowText(true);
 
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(r => setTimeout(r, 2800));
       setShowGlitch(true);
       await new Promise(r => setTimeout(r, 300));
       setShowGlitch(false);
 
-      await new Promise(r => setTimeout(r, 1500));
-      setPhase(1);
-
-      for (let i = 3; i > 0; i--) {
-        setCountdown(i);
-        await new Promise(r => setTimeout(r, 1000));
-      }
-
+      await new Promise(r => setTimeout(r, 1800));
       setPhase(2);
     };
 
@@ -233,22 +231,24 @@ export default function TeaserPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
             className="relative z-20 flex flex-col items-center justify-center h-screen px-6"
           >
-            {/* Phase 0: Initial loading */}
+            {/* Phase 0: System Initializing */}
             {phase === 0 && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
                 className="text-center space-y-8"
               >
                 {showText ? (
                   <>
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 2 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1.5, ease: "easeOut" }}
                     >
                       <h1 className="text-2xl sm:text-4xl md:text-6xl tracking-widest mb-4">
                         SYSTEM.<span className="text-white">INITIALIZING</span>
@@ -258,7 +258,7 @@ export default function TeaserPage() {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      transition={{ delay: 1, duration: 1 }}
+                      transition={{ delay: 1.2, duration: 1.2 }}
                       className="space-y-2"
                     >
                       <p className="text-green-300 text-sm sm:text-lg">
@@ -276,36 +276,12 @@ export default function TeaserPage() {
               </motion.div>
             )}
 
-            {/* Phase 1: Countdown */}
-            {phase === 1 && (
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="text-center"
-              >
-                <motion.div
-                  key={countdown}
-                  initial={{ scale: 2, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-[100px] sm:text-[180px] md:text-[240px] font-bold leading-none"
-                >
-                  {countdown}
-                </motion.div>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-base sm:text-xl mt-4 sm:mt-8 tracking-widest"
-                >
-                  PREPARE FOR DOWNLOAD
-                </motion.p>
-              </motion.div>
-            )}
-
-            {/* Phase 2: Main teaser */}
+            {/* Phase 2: Main Hero */}
             {phase === 2 && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1.4, ease: "easeOut" }}
                 className="text-center max-w-3xl space-y-6 sm:space-y-12 px-2"
               >
                 <div className="relative">
@@ -342,18 +318,18 @@ export default function TeaserPage() {
 
                 <div className="space-y-8">
                   <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 1.2, ease: "easeOut" }}
                     className="text-base sm:text-xl md:text-2xl tracking-wide leading-relaxed"
                   >
                     THE MATRIX HAS YOU NEO...
                   </motion.p>
 
                   <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1 }}
+                    initial={{ opacity: 0, scaleX: 0 }}
+                    animate={{ opacity: 1, scaleX: 1 }}
+                    transition={{ delay: 1.5, duration: 1.0, ease: "easeOut" }}
                     className="space-y-4"
                   >
                     <p className="text-green-300/70 text-lg">
@@ -364,9 +340,9 @@ export default function TeaserPage() {
 
                 {/* Pulsing CTA */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5 }}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 2.2, duration: 1.0, ease: "easeOut" }}
                   className="pt-8"
                 >
                   <motion.div
@@ -395,7 +371,7 @@ export default function TeaserPage() {
                   <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2 }}
+                    transition={{ delay: 3.2, duration: 1.0 }}
                     className="mt-6 text-sm text-green-300/50 tracking-widest"
                   >
                     FOLLOW THE WHITE RABBIT
