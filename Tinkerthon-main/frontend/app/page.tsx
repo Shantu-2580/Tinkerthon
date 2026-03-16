@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import "@fontsource/orbitron/600.css";
@@ -63,7 +64,7 @@ function MatrixRain() {
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      
+
       const newColumns = Math.ceil(canvas.width / fontSize);
       if (newColumns > drops.length) {
         for (let i = drops.length; i < newColumns; i++) {
@@ -165,6 +166,37 @@ export default function TeaserPage() {
                      0 0 30px #00ff41;
         }
       }
+      @keyframes logo-breathe {
+        0%, 100% { opacity: 0.85; }
+        50% { opacity: 1.0; }
+      }
+      @keyframes logo-scanline {
+        0% { top: -10%; opacity: 0.7; }
+        80% { opacity: 0.7; }
+        100% { top: 110%; opacity: 0; }
+      }
+      @keyframes logo-glitch {
+        0%, 95%, 100% {
+          filter: drop-shadow(0 0 10px #00ff41);
+          transform: translate(0, 0);
+        }
+        95.5% {
+          filter: drop-shadow(2px 0 0 #ff0000) drop-shadow(-2px 0 0 #00ffff);
+          transform: translate(2px, 0);
+        }
+        96% {
+          filter: drop-shadow(-2px 0 0 #ff0000) drop-shadow(2px 0 0 #00ffff);
+          transform: translate(-2px, 0);
+        }
+        96.5% {
+          filter: drop-shadow(2px 0 0 #00ff00) drop-shadow(-2px 0 0 #0000ff);
+          transform: translate(1px, -1px);
+        }
+        97% {
+          filter: drop-shadow(0 0 10px #00ff41);
+          transform: translate(0, 0);
+        }
+      }
     `;
     document.head.appendChild(style);
 
@@ -194,11 +226,10 @@ export default function TeaserPage() {
 
   return (
     <div
-      className={`bg-black text-green-400 font-mono relative h-screen ${
-        activeView === "timeline"
+      className={`bg-black text-green-400 font-mono relative h-screen ${activeView === "timeline"
           ? "overflow-y-auto overflow-x-hidden"
           : "overflow-hidden"
-      }`}
+        }`}
     >
       <MatrixRain />
 
@@ -286,6 +317,21 @@ export default function TeaserPage() {
                 className="text-center max-w-3xl space-y-6 sm:space-y-12 px-2"
               >
                 <div className="relative">
+                  {/* N Logo above title */}
+                  <div className="relative mx-auto mb-4 w-[100px] h-[100px] overflow-hidden">
+                    <Image
+                      src="/images/nexus-logo.png"
+                      alt="Nexus Logo"
+                      width={100}
+                      height={100}
+                      className="mx-auto"
+                      style={{
+                        animation:
+                          "logo-glitch 5s steps(1) infinite, logo-breathe 3s ease-in-out infinite",
+                        filter: "drop-shadow(0 0 10px #00ff41)",
+                      }}
+                    />
+                  </div>
                   <motion.h1
                     animate={{
                       x: showGlitch ? [-2, 2, -1, 1, 0] : 0,
