@@ -11,6 +11,7 @@ import PlaceholderSection from "@/components/ui/PlaceholderSection";
 import ConstructSection from "@/components/ui/ConstructSection";
 import QuoteTransition from "@/components/ui/QuoteTransition";
 import TimelineSection from "@/components/ui/TimelineSection";
+import SponsorsSection from "@/components/ui/SponsorsSection";
 import { PORTALS } from "@/lib/portals";
 
 function MatrixRain() {
@@ -427,11 +428,15 @@ export default function TeaserPage() {
           <ConstructSection key="domains" onReturn={handleReturn} />
         )}
 
-        {["sponsors", "registration"].includes(activeView) && (
+        {activeView === "sponsors" && (
+          <SponsorsSection key="sponsors" onReturn={handleReturn} />
+        )}
+
+        {activeView === "registration" && (
           <PlaceholderSection
-            key={activeView}
-            title={SECTION_META[activeView]?.title || activeView.toUpperCase()}
-            subtitle={SECTION_META[activeView]?.subtitle || ""}
+            key="registration"
+            title={SECTION_META["registration"]?.title || "REGISTRATION"}
+            subtitle={SECTION_META["registration"]?.subtitle || ""}
             onReturn={handleReturn}
           />
         )}
