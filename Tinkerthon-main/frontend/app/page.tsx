@@ -448,6 +448,15 @@ export default function TeaserPage() {
                       }}
                     />
                   )}
+                  
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className="text-xs sm:text-sm text-white tracking-[0.2em] mt-2"
+                  >
+                    CONNECTING MINDS TO CREATE SOLUTION
+                  </motion.p>
                 </div>
 
                 <div className="space-y-8">
